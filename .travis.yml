@@ -1,3 +1,6 @@
+before_install:
+- openssl aes-256-cbc -K $encrypted_5b47040873bd_key -iv $encrypted_5b47040873bd_iv -in newkey.json.enc -out ../newkey.json -d
+
 # Versão do Ubuntu
 dist: focal
 
@@ -70,4 +73,21 @@ jobs:
     - stage: Stage Test
       name: GET URL Stage
       script:
-        - curl https://devopslab-gabydias.herokuapp.com/ | grep Hello || travis_terminate 1;
+        - curl https://lab-devops-clark.herokuapp.com/ | grep Hello || travis_terminate 1;
+
+    - stage: Production Deploy
+      name: Google Api Engine
+      script: skip
+
+      # Definir o Deploy no Google Cloud
+      deploy:
+        provider: gae
+        keyfile: ../newkey.json
+        project: lab-devops-cloud-329914
+        on:
+          branch: main
+
+    - stage: Production Test
+      name: GET URL Production
+      script:
+        - curl lab-devops-cloud-329914.appspot.com/ | grep Hello || travis_terminate 1;
