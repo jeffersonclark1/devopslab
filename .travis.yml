@@ -1,5 +1,5 @@
 before_install:
-- openssl aes-256-cbc -K $encrypted_5b47040873bd_key -iv $encrypted_5b47040873bd_iv -in newkey.json.enc -out ../newkey.json -d
+ - openssl aes-256-cbc -K $encrypted_7160780ec53e_key -iv $encrypted_7160780ec53e_iv -in newkey.json.enc -out ../newkey.json -d
 
 # Versão do Ubuntu
 dist: focal
